@@ -20,6 +20,7 @@ class App extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.onArchiveHandler = this.onArchiveHandler.bind(this);
     this.onDeleteHandler = this.onDeleteHandler.bind(this);
+    this.onDeleteHandlerArchived = this.onDeleteHandlerArchived.bind(this);
     this.onUnarchiveHandler = this.onUnarchiveHandler.bind(this);
   }
 
@@ -27,6 +28,11 @@ class App extends React.Component {
     this.setState(prevState => ({
       notes: [...prevState.notes, newNote],
     }));
+  }
+
+  onDeleteHandlerArchived(id) {
+    const updatedNotes = this.state.notes.filter((note) => note.id !== id);
+    this.setState({ notes: updatedNotes });
   }
 
   onDeleteHandler(id) {
@@ -92,7 +98,7 @@ class App extends React.Component {
         <div className="flex flex-col w-11/12 mx-auto">
           <div>
             <h2 className="text-2xl font-bold mb-2 pt-10 dark:text-white">Active Notes</h2>
-            <NoteList notes={filteredNotes} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler} />
+            <NoteList notes={filteredNotes} onDelete={this.onDeleteHandlerArchived} onArchive={this.onArchiveHandler} />
           </div>
           <div>
             <h2 className="text-2xl font-bold mb-2 pt-10 dark:text-white">Archived Notes</h2>
